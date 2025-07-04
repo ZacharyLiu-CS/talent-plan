@@ -358,8 +358,10 @@ fn load(
         let new_pos = stream.byte_offset() as u64;
         match cmd? {
             Command::Set { key, .. } => {
-                if let Some(old_cmd) = index.get(&key) {
-                    uncompacted += old_cmd.value().len;
+                if index.contains_key(&key) {
+                    if let Some(old_cmd) = index.get(&key) {
+                        uncompacted += old_cmd.value().len;
+                    }
                 }
                 index.insert(key, (gen, pos..new_pos).into());
             }
