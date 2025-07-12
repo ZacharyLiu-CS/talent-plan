@@ -224,6 +224,7 @@ fn cli_access_server(engine: &str, addr: &str) {
     let handle = thread::spawn(move || {
         let _ = receiver.recv(); // wait for main thread to finish
         child.kill().expect("server exited before killed");
+        child.wait().expect("wait server exited")
     });
     thread::sleep(Duration::from_secs(1));
 
@@ -305,6 +306,7 @@ fn cli_access_server(engine: &str, addr: &str) {
     let handle = thread::spawn(move || {
         let _ = receiver.recv(); // wait for main thread to finish
         child.kill().expect("server exited before killed");
+        child.wait().expect("wait server exited")
     });
     thread::sleep(Duration::from_secs(1));
 
